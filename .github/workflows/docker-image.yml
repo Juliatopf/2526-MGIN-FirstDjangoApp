@@ -17,6 +17,6 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag firstdjangoapp:latest
     - name: Login on GHCR
-      run: docker login ghcr.io -u juliatopf -p
+      run: docker login ghcr.io -u juliatopf -p ${julia}
     - name: Push the Docker image to GHCR
       run: docker push ghcr.io/juliatopf/firstdjangoapp:latest
