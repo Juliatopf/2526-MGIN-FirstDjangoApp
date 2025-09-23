@@ -24,5 +24,7 @@ urlpatterns = [
    # path('hello/', pmapp_views.helloworld_view)
     path('patients/add', pmapp_views.add_patient),
     path('patients/', pmapp_views.list_patient),
-    path('patients/edit/<int:id>', pmapp_views.edit_patient)
+    path('patients/edit/<int:id>', pmapp_views.edit_patient),
+    path('login/', pmapp_views.perform_login),
+    path('logout/', pmapp_views.perform_logout)
 ]

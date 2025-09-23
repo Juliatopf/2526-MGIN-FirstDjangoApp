@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>First Django App</title>
+        <link rel="stylesheet" href="/static/style.css" />
+    </head>
+
+    <body>
+        <nav>
+            <span class="menubutton">
+                <a href="/patients/">Alle Patienten anzeigen</a>
+            </span>
+            <span class="menubutton">
+                <a href="/patients/add">Neue Patienten hinzufügen</a>
+            </span>
+
+            {% if user.is_authenticated %}
+            <span>
+                User: {{ user}}
+            </span>
+            
+            <span>
+                <a href="/logout">Logout</a>
+            </span>
+
+            {% else %}
+            <span>
+                <a href="/login">Login</a>
+            </span>
+
+            {% endif %}
+        </nav>
+        {% block content %}
+        Bitte wählen sie eine Seite aus
+        {% endblock content %}
+    </body>
+</html>

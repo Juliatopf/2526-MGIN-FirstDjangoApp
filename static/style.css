@@ -1,0 +1,11 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.menubutton{
+    border: 1PX solid RED;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 3px;
+    background-color: rgb(168, 102, 102);
+}
