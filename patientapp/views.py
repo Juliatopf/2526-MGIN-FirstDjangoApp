@@ -58,7 +58,7 @@ def perform_login(request:HttpRequest):
         username = request.POST["username"]
         password = request.POST["password"]
 
-        user = AbstractUser | authenticate(request, username=username, password=password)
+        user : AbstractUser | None =  authenticate(request, username=username, password=password)
        
         if user is not None:
             login(request, user)
