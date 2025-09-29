@@ -61,15 +61,15 @@ def perform_login(request:HttpRequest):
         password = request.POST["password"]
 
         user : AbstractUser | None =  authenticate(request, username=username, password=password)
-       
+
         if user is not None:
-            login(request, user)
-
-                #if
-
-            login_status = "SUCCESSFUL"
+            if not user.is_active:
+                login(request, user)
+                return redirect("/medical-status/")
+            else:
+                login(request, user)
+                login_status = "SUCCESSFUL"
         else:
-            # user is None
             login_status = "FAILED"
     return render(request, "login.html", context={"login_status": login_status})
 
@@ -91,7 +91,19 @@ def register(request: HttpRequest):
             error_message = "E-Mail existiert bereits."
         else:
             user = User.objects.create_user(username=username, email=email, password=password)
-            login(request, user)
-            return redirect("/patients/")
+            user.is_active = False
+            user.save()
+            # Kein automatisches Login, stattdessen Hinweis
+            return render(request, "register.html", {"error_message": "Registrierung erfolgreich! Dein Account muss erst aktiviert werden."})
 
     return render(request, "register.html", {"error_message": error_message})
+
+def medical_status(request: HttpRequest):
+    message = ""
+    if request.method == "POST":
+        status = request.POST.get("status")
+        # Hier kannst du die Daten speichern, z.B. im User-Profil oder einer eigenen Tabelle
+        message = "Dein medizinischer Status wurde gespeichert."
+        # Nach dem Speichern ggf. weiterleiten
+        return render(request, "medical_status.html", {"message": message})
+    return render(request, "medical_status.html", {"message": message})

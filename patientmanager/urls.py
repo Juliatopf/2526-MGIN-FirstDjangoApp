@@ -27,5 +27,6 @@ urlpatterns = [
     path('patients/edit/<int:id>', pmapp_views.edit_patient),
     path('login/', pmapp_views.perform_login),
     path('logout/', pmapp_views.perform_logout),
-    path('register/', pmapp_views.register)
+    path('register/', pmapp_views.register),
+    path('medical-status/', pmapp_views.medical_status)
 ]

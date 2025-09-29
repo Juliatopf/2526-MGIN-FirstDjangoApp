@@ -15,6 +15,13 @@
 </div>
 
 <div>{{ login_status }}</div>
+{% if login_status == "SUCCESSFUL" %}
+    <div style="margin-top:20px;">
+        <a href="/medical-status/">
+            <button type="button" style="padding:10px 20px; background:#007bff; color:white; border:none; border-radius:4px;">Medizinischen Status ausfüllen</button>
+        </a>
+    </div>
+{% endif %}
 {% endblock content %}
 
 
