@@ -132,6 +132,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+*env
 .env
 .venv
 env/
@@ -283,3 +284,4 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,django
+

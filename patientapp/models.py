@@ -7,7 +7,8 @@ from django.contrib import admin
 
 class Patient(models.Model):
     id = models.AutoField(primary_key=True)
-    birthday = models.DateTimeField()
+    birthday = models.DateTimeField(default="")
+    svnr2 = models.CharField(max_length=11, default="")
     svnr = models.CharField(max_length=11)
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
 

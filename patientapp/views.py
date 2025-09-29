@@ -76,3 +76,7 @@ def perform_logout(request: HttpRequest):
 
     return redirect("/login/")
 
+def register(request: HttpRequest):
+    
+    pass
+

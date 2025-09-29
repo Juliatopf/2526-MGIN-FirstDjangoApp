@@ -27,6 +27,10 @@ COPY . /app/
  
 # Expose the Django port
 EXPOSE 8000
+
+#instal odbc shared objects for azure aql to work
+RUN apt update -y
+RUN apt install unixodbc -y
  
 # Run Django’s development server
 CMD ["sh", "docker-entrypoint.sh"]

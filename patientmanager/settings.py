@@ -69,6 +69,16 @@ TEMPLATES = [
     },
 ]
 
+secrets = {
+    "AZURE_SQL_HOST=juliatopf-django-db.database.windows.net",
+    "AZURE_SQL_USERNAME=juliatopf",
+    "AZURE_SQL_PASSWORD=HTLKrems1",
+    "AZURE_AQL_DATABASE=juliatopf-django-db"
+    "AZURE_SQL_SERVERNAME=juliatopf-django-db"
+}
+
+
+
 WSGI_APPLICATION = 'patientmanager.wsgi.application'
 
 
@@ -77,6 +87,20 @@ WSGI_APPLICATION = 'patientmanager.wsgi.application'
 
 
 def inferDatabaseConfiguration():
+    #check if azure db is config
+    if "AZURE_SQL_HOST" in secrets:
+        return{
+            "ENGINE": "mssql",
+            "NAME": secrets["AZURE_SQL_DATABASE"],
+            "USER": f"{secrets["AZURE_SQL_USERNAME"]}@{secrets["AZURE_SQL_SERVERNAME"]}",
+            "PASSWORD": secrets["AZURE_SQL_PASSWORD"],
+            "HOST": secrets["AZURE_SQL_HOST"],
+            "PORT": "",
+            "OPTIONS": {
+                'driver': "ODBC Driver 18 for SQL Server"
+                }
+        }
+
     #to do check if program runs in a container
     if "POSTGRES_HOST" in os.environ:
         return {
