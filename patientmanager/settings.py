@@ -26,7 +26,14 @@ SECRET_KEY = os.environ.get("SECRET_KEY", default='django-insecure-_3#@d1mugb5$p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DEBUG", default=1))
 
-ALLOWED_HOSTS = []  
+ALLOWED_HOSTS=[]
+
+def addAllowedHost():
+    if 'ALLOWED_HOST' in os.environ:
+        ALLOWED_HOSTS.append(os.environ['ALLOWED_HOST'])
+ 
+addAllowedHost()
+
 
 
 # Application definition
@@ -104,6 +111,7 @@ def inferDatabaseConfiguration():
             'extra_params': 'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=300;',
             },
         }
+    
 
     #to do check if program runs in a container
     if "POSTGRES_HOST" in os.environ:
