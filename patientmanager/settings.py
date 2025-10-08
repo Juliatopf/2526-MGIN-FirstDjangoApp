@@ -70,11 +70,11 @@ TEMPLATES = [
 ]
 
 secrets = {
-    "AZURE_SQL_HOST=juliatopf-django-db.database.windows.net",
-    "AZURE_SQL_USERNAME=juliatopf",
-    "AZURE_SQL_PASSWORD=HTLKrems1",
-    "AZURE_AQL_DATABASE=juliatopf-django-db"
-    "AZURE_SQL_SERVERNAME=juliatopf-django-db"
+    "AZURE_SQL_HOST": "juliatopf-django-db.database.windows.net",
+    "AZURE_SQL_USERNAME": "juliatopf",
+    "AZURE_SQL_PASSWORD": "HTLKrems1",
+    "AZURE_SQL_DATABASE": "juliatopf-django-db",
+    "AZURE_SQL_SERVERNAME": "tcp:juliatopf-django-db.database.windows.net,1433"
 }
 
 
@@ -85,20 +85,24 @@ WSGI_APPLICATION = 'patientmanager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+from dotenv import load_dotenv
+load_dotenv()
 
 def inferDatabaseConfiguration():
     #check if azure db is config
-    if "AZURE_SQL_HOST" in secrets:
-        return{
+    if "AZURE_SQL_HOST" in os.environ:
+        print("Using Azure SQL Database")
+        return {
             "ENGINE": "mssql",
             "NAME": secrets["AZURE_SQL_DATABASE"],
-            "USER": f"{secrets["AZURE_SQL_USERNAME"]}@{secrets["AZURE_SQL_SERVERNAME"]}",
+            "USER": secrets["AZURE_SQL_USERNAME"],
             "PASSWORD": secrets["AZURE_SQL_PASSWORD"],
             "HOST": secrets["AZURE_SQL_HOST"],
-            "PORT": "",
-            "OPTIONS": {
-                'driver': "ODBC Driver 18 for SQL Server"
-                }
+            "PORT": "1433",
+               'OPTIONS': {
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'extra_params': 'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;',
+            },
         }
 
     #to do check if program runs in a container
@@ -118,7 +122,19 @@ def inferDatabaseConfiguration():
     }
 
 DATABASES = {
-    'default': inferDatabaseConfiguration()
+    'default': {
+        'ENGINE': 'mssql',
+        'NAME': 'juliatopf-django-db',
+        'USER': 'juliatopf',
+        'PASSWORD': 'HTLKrems1',
+        'HOST': 'juliatopf-django-db.database.windows.net',
+        'PORT': '1433',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'encrypt': True,
+            'trust_server_certificate': False,
+        },
+    }
 }
 
 
