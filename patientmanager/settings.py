@@ -34,7 +34,12 @@ def addAllowedHost():
  
 addAllowedHost()
 
+# todo add trusteted origin via env var
+CSRF_TRUSTED_ORIGINS = ['http://djangoapp-jt.azurewebsites.net', 'http://localhost']
 
+def addCSRFTrustedOrigins():
+    if 'AZURE_CSRF_TRUSTED_ORIGINS' in os.environ:
+        CSRF_TRUSTED_ORIGINS.append(os.environ['AZURE_CSRF_TRUSTED_ORIGIN'])
 
 # Application definition
 

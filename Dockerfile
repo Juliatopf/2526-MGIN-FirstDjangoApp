@@ -1,5 +1,6 @@
 # Use the official Python runtime image
 FROM python:3.13  
+
  
 # Create the app directory
 RUN mkdir /app    
@@ -31,6 +32,8 @@ EXPOSE 8000
 #instal odbc shared objects for azure aql to work
 RUN apt update -y
 RUN apt install unixodbc -y
+
+HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost:8000/hello || exit 1
  
 # Run Django’s development server
 CMD ["sh", "docker-entrypoint.sh"]

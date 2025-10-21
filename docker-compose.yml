@@ -4,6 +4,13 @@ services:
     ports:
       - "8000:8000" #portweiterleitung von host:container
     env_file: .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+      start_interval: 5s
     # depends_on:
     #   - db
 
